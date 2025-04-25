@@ -1,0 +1,41 @@
+<div class="main-container">
+  <div class="nav-container">
+    <ul>
+      <a href="#" class="navbar-brand">Osztálynapló</a>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="">Adatok</a></li>
+      <li routerLinkActive="active"><a routerLink="/grades">Osztályzatok</a></li>
+      <span style="float: right">
+        <li class="right-menu"><a (click)="isRightMenuOpen=true"><i class="fa fa-bars"></i></a></li>
+        <div class="right-nav" [ngClass]="{ 'open': isRightMenuOpen }">
+          <a class="close-box" (click)="isRightMenuOpen=false"><i class="fa fa-close"></i></a>
+          <li routerLinkActive="active"><a routerLink="/register">Regisztráció</a></li>
+          <li routerLinkActive="active" *ngIf="!isLoggedIn"><a routerLink="/login">Bejelentkezés</a></li>
+          <li routerLinkActive="active" *ngIf="isLoggedIn"><a (click)="logout()">Kijelentkezés</a></li>
+        </div>
+      </span>
+    </ul>
+  </div>
+  <div class="component-container">
+    <router-outlet></router-outlet>
+  </div>
+  <div [ngClass]="storageService.justRegistered ? 'message-div' : 'no-message'">
+    <div class="first-raw">
+      <a>{{storageService.registrationMessage}} </a>
+      <button type="button" class="btn btn-outline-danger btn-sm"
+      (click)="closeMessage()">x</button>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block ok" (click)="closeMessage()"
+            appButtonHover [highlightColor]="'#85c1e9'">OK</button>
+  </div>
+  <div [ngClass]="storageService.justLogged? 'message-div' : 'no-message'">
+    <div class="first-raw">
+      <a>{{storageService.loginMessage}} {{storageService.username}} <br>
+         {{storageService.role}}</a>
+      <button type="button" class="btn btn-outline-danger btn-sm"
+              (click)="closeMessage()" >x</button>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block ok" (click)="closeMessage()"
+            appButtonHover [highlightColor]="'#85c1e9'">OK</button>
+  </div>
+</div>
+
